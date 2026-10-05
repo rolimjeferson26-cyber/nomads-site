@@ -1,0 +1,43 @@
+# Variáveis de ambiente e segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*.crt
+secrets/
+
+# Bases de dados
+*.db
+*.sqlite
+*.sqlite3
+
+# Python (ambiente virtual e cache dos scripts)
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Fotos originais antes de comprimir (só os .webp vão para o site)
+assets/img/trabalhos/originais/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+.directory
+*~
+
+# Editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Outros
+*.zip
+*.log
