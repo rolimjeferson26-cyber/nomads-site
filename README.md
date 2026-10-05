@@ -11,7 +11,7 @@ css/style.css       visual (cores e fontes em variáveis no topo)
 js/main.js          formulário de orçamento (WhatsApp) e vídeos
 assets/img/         logótipos (webp no site, png como original)
 assets/video/       vídeos comprimidos (720p, sem som) + posters
-assets/fonts/       Big Shoulders Display e Archivo (guardadas localmente)
+assets/fonts/       Big Shoulders Display e Archivo (locais, licença OFL incluída)
 ```
 
 ## Ver no computador
