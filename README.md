@@ -64,5 +64,5 @@ Títulos: Big Shoulders Display. Texto: Archivo.
 - [x] Número de WhatsApp real em `js/main.js`
 - [x] Murtosa (região de Aveiro); CTT para o continente, ilhas sob consulta
 - [ ] 6 a 10 fotos reais das peças para a secção "Trabalhos" (grelha e script prontos; falta pôr as fotos)
-- [ ] Criar repositório no GitHub e publicar no GitHub Pages (HTTPS)
+- [x] Publicado em https://rolimjeferson26-cyber.github.io/nomads-site/ (HTTPS obrigatório)
 - [ ] Depois: Google Business com o link do site; mudar categoria do Instagram
