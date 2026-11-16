@@ -66,13 +66,15 @@ pagamentos e área de cliente mostram uma mensagem e o WhatsApp.
 
 ## Pôr a funcionar (primeira vez)
 
-1. **Supabase**: criar o projeto `nomads` (região UE, ex. `eu-west-3`). A conta gratuita só permite 2 projetos ativos.
-   - Aplicar `supabase/migrations/*.sql` por ordem (SQL Editor ou `supabase db push`).
-   - Authentication › URL Configuration: *Site URL* = `NEXT_PUBLIC_SITE_URL`; *Redirect URLs* = `<SITE_URL>/auth/callback`
-     (juntar os dois endereços, workers.dev e nomadstextil.store, durante a transição).
-   - Criar a tua conta no site e torná-la admin:
-     `insert into public.admins (user_id) select id from auth.users where email = 'O_TEU_EMAIL';`
-   - Preencher `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` em `.env.production` e o segredo `SUPABASE_SECRET_KEY`.
+1. **Supabase** (feito): a NOMAD'S usa o projeto partilhado **ria-apps** (`zvahdgyqxkevpbekhsvq`, eu-west-3),
+   num schema próprio **`nomads`** (como a Ria Auto usa `auto`). Buckets `nomads-estampas` (público) e `nomads-artes` (privado).
+   - Migrações já aplicadas: `supabase/migrations/2026111700*.sql`. A última expõe o schema na API
+     (`pgrst.db_schemas = 'public, auto, nomads'` — nunca remover `public` nem `auto`).
+   - O login é partilhado com as apps da Ria: **não alterar** Site URL, templates de email nem definições de Auth.
+     Só foram acrescentados os Redirect URLs `https://nomads-site.rolimjeferson-26.workers.dev/**` e `https://nomadstextil.store/**`.
+   - Não há trigger em `auth.users`: o perfil NOMAD'S (`nomads.perfis`) é criado quando a pessoa guarda os dados.
+   - Tornar-se admin: `insert into nomads.admins (user_id) select id from auth.users where email = 'O_TEU_EMAIL';`
+   - Falta só o segredo: `npx wrangler secret put SUPABASE_SECRET_KEY` (chave *secret*/service role do ria-apps).
 2. **Stripe (modo de teste)**: Developers › API keys › `sk_test_...` → `STRIPE_SECRET_KEY`.
    Webhooks › endpoint `<SITE_URL>/api/stripe/webhook` com os eventos `checkout.session.completed`,
    `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`, `checkout.session.expired`
@@ -90,7 +92,7 @@ Falta, por esta ordem:
 2. Em `.env.production`: `NEXT_PUBLIC_SITE_URL=https://nomadstextil.store`.
 3. Em `wrangler.jsonc`, descomentar `"routes": [{ "pattern": "nomadstextil.store", "custom_domain": true }]`.
 4. `npm run deploy`.
-5. Supabase Auth: Site URL e Redirect URLs para `https://nomadstextil.store`.
+5. Supabase Auth: nada a fazer (o Redirect URL `https://nomadstextil.store/**` já existe; o Site URL é o da Ria e não se muda).
 6. Stripe: endpoint do webhook para `https://nomadstextil.store/api/stripe/webhook` (novo signing secret → `wrangler secret put STRIPE_WEBHOOK_SECRET`).
 
 As URLs de sucesso/cancelamento do Stripe, o sitemap, o canonical e o Open Graph derivam todos de `NEXT_PUBLIC_SITE_URL`.

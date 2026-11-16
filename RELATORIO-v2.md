@@ -1,5 +1,7 @@
 # Relatório final · NOMAD'S v2
 
+> **Atualização (base de dados e telemóvel):** ver a secção “Base de dados no ria-apps” no fim.
+
 Branch `v2` em `rolimjeferson26-cyber/nomads-site`. O site antigo (branch `main`, GitHub Pages) não foi alterado.
 
 **Versão de testes publicada:** https://nomads-site.rolimjeferson-26.workers.dev
@@ -62,10 +64,43 @@ estão no README, secção “Passar para o domínio nomadstextil.store”.
 | Entrega na zona: preço (3 €) e códigos postais (3870, 3860, 3880) | `src/config/portes.ts` / Admin |
 | Cores e tamanhos em stock | `src/config/precos.ts` (`CORES`, `TAMANHOS`) |
 | Revisão jurídica dos textos legais | `src/app/legal/*` |
-| Criar o projeto Supabase “nomads” (libertar um dos 2 projetos gratuitos ou passar a plano pago) | README, passo 1 |
+| Pôr o segredo `SUPABASE_SECRET_KEY` (chave secret do ria-apps) com `wrangler secret put` | README, passo 1 |
 | Chaves Stripe de teste e webhook | README, passo 2 |
 | Conta Resend, domínio verificado, `OWNER_EMAIL` e `EMAIL_FROM` | README, passo 3 |
-| Email do dono para o tornar admin | SQL no README |
+| Correr o SQL de admin (abaixo) | Supabase › SQL Editor |
 | Trocar nameservers na Amen e fazer a troca para nomadstextil.store | README |
 | Fotos reais de trabalhos (o script `tools/otimizar_fotos.py` continua disponível) | `public/img/trabalhos/` |
 | Contrato CTT Expresso (se um dia houver) | `src/lib/envio/providers.ts` |
+
+## Base de dados no ria-apps (atualização)
+
+**O que mudou**
+- Sem projeto novo: tudo vive no schema **`nomads`** do projeto **ria-apps** (`zvahdgyqxkevpbekhsvq`, eu-west-3). `public`, `auto` e `auth` não foram tocados.
+- Migrações substituídas por `supabase/migrations/20261117000000_nomads_schema.sql`, `…0100_nomads_dados_iniciais.sql` e `…0200_nomads_expor_api.sql`, já aplicadas: 9 tabelas, funções `nomads.is_admin()` e `nomads.registar_pedido()`, RLS em todas as tabelas, grants explícitos e mínimos (o mesmo padrão do schema `auto`), 12 estampas de exemplo.
+- API: `pgrst.db_schemas` passou de `public, auto` para **`public, auto, nomads`**. Testado: o PostgREST responde “Only the following schemas are exposed: public, auto, nomads”; o `anon` lê `nomads.estampas` mas recebe *permission denied* em encomendas, rate limiting e no RPC; o `auto` continua com as mesmas permissões que tinha.
+- Storage: criado `nomads-estampas` (público, 3 MB, PNG/JPG/WebP); reutilizado `nomads-artes` (privado, limite ajustado para 5 MB, PNG/JPG/WebP). 4 políticas novas em `storage.objects`, todas presas a estes buckets.
+- Auth: só foram **acrescentados** 2 Redirect URLs (`https://nomads-site.rolimjeferson-26.workers.dev/**` e `https://nomadstextil.store/**`). Os 5 URLs da Ria, o Site URL, os templates e as restantes definições ficaram iguais.
+- Sem trigger em `auth.users` (um erro aí bloquearia os registos das apps da Ria): o perfil NOMAD'S é criado quando a pessoa guarda os dados; o nome do registo fica nos metadados do utilizador.
+- Site: clientes Supabase (browser, servidor, service role e proxy) com `db: { schema: "nomads" }`; buckets em `src/lib/supabase/config.ts`. `.env.production` tem o URL e a chave publicável. Segredo `RATE_LIMIT_SALT` gerado e posto com `wrangler secret put`. Site republicado; 36 testes, lint e TypeScript a passar.
+- Atenção: como o login é partilhado, os emails de confirmação e de recuperação usam os templates da Ria e quem já tem conta na Ria entra na NOMAD'S com a mesma conta.
+
+**Avisos de segurança da Supabase**: nenhuma tabela `nomads` sem RLS. Só 2 avisos INFO em `nomads.limites_pedidos` e `nomads.eventos_stripe` (“RLS sem políticas”), intencionais: são só da service role. Os WARN restantes são do `public` (Ria Agenda) e o de “leaked password protection” é uma definição de Auth partilhada; não foram alterados.
+
+**Falta (tens de ser tu):** a chave secreta não sai pelas ferramentas que tenho e não tive permissão para a procurar nos teus ficheiros. Sem ela o site lê estampas, faz login e mostra a área de cliente, mas não grava orçamentos/encomendas nem faz uploads. No terminal:
+
+```
+npx wrangler secret put SUPABASE_SECRET_KEY
+```
+(colar a chave *secret* / service role do ria-apps quando pedir; não é preciso republicar).
+
+**SQL para te tornares admin** (Supabase › SQL Editor do ria-apps; a conta tem de existir, pode ser a mesma das apps da Ria):
+
+```sql
+insert into nomads.admins (user_id)
+select id from auth.users where email = 'rolimjeferson.26@gmail.com'
+on conflict do nothing;
+```
+
+## Correção em telemóvel
+
+A 390 e 360 px o botão do WhatsApp tapava “Racing”. Em ecrãs pequenos o WhatsApp sobe para cima da barra de estilos e a barra usa a largura toda; o cartão de preço do configurador deixa de ficar colado ao fundo em telemóvel e o rodapé reserva espaço para os dois. Verificado com emulação de dispositivo (390 e 360 px) em Início, Loja e Configurador, local e em produção: as 4 opções ficam dentro do ecrã, clicáveis, sem sobreposição e sem scroll horizontal.
