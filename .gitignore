@@ -2,6 +2,8 @@
 .env
 .env.*
 !.env.example
+.dev.vars
+.dev.vars.*
 *.pem
 *.key
 *.p12
@@ -11,19 +13,33 @@ id_ed25519*
 *.crt
 secrets/
 
+# Dependências e builds
+node_modules/
+.next/
+.open-next/
+.wrangler/
+out/
+build/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+cloudflare-env.d.ts
+
 # Bases de dados
 *.db
 *.sqlite
 *.sqlite3
+supabase/.temp/
+supabase/.branches/
 
-# Python (ambiente virtual e cache dos scripts)
+# Python (script das fotos)
 .venv/
 venv/
 __pycache__/
 *.pyc
 
-# Fotos originais antes de comprimir (só os .webp vão para o site)
-assets/img/trabalhos/originais/
+# Fotos originais antes de comprimir
+public/img/trabalhos/originais/
 
 # Sistema operativo
 .DS_Store
@@ -41,3 +57,4 @@ desktop.ini
 # Outros
 *.zip
 *.log
+.vercel

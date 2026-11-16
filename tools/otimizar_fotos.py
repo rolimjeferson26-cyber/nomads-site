@@ -1,8 +1,8 @@
 """
 NOMAD'S | Otimizar fotos para a secção "Trabalhos"
 
-Lê as fotos originais de assets/img/trabalhos/originais/ e grava versões
-para a web em assets/img/trabalhos/ (formato WebP, sem metadados).
+Lê as fotos originais de public/img/trabalhos/originais/ e grava versões
+para a web em public/img/trabalhos/ (formato WebP, sem metadados).
 
 Como usar (na pasta do projeto):
     .venv/bin/python tools/otimizar_fotos.py
@@ -15,8 +15,8 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-PASTA_ORIGINAIS = Path("assets/img/trabalhos/originais")
-PASTA_SAIDA = Path("assets/img/trabalhos")
+PASTA_ORIGINAIS = Path("public/img/trabalhos/originais")
+PASTA_SAIDA = Path("public/img/trabalhos")
 LADO_MAXIMO = 1200  # píxeis no lado maior
 QUALIDADE = 80      # 0 a 100 (80 = bom equilíbrio nitidez/peso)
 EXTENSOES = {".jpg", ".jpeg", ".png", ".webp"}
