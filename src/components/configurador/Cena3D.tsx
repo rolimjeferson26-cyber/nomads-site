@@ -1,4 +1,7 @@
 "use client";
+// Os objetos three.js (materiais, texturas, refs) são mutados dentro de useFrame:
+// é o padrão do react-three-fiber para animar sem re-renderizar a cada frame.
+/* eslint-disable react-hooks/immutability */
 
 import { ContactShadows, useTexture } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";

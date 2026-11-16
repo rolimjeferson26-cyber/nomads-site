@@ -31,7 +31,12 @@ export function Cabecalho() {
     setSolido(y > 24);
   });
 
-  useEffect(() => setAberto(false), [caminho]);
+  // Fecha o menu ao mudar de página
+  const [caminhoAnterior, setCaminhoAnterior] = useState(caminho);
+  if (caminho !== caminhoAnterior) {
+    setCaminhoAnterior(caminho);
+    setAberto(false);
+  }
   useEffect(() => {
     document.body.style.overflow = aberto ? "hidden" : "";
   }, [aberto]);

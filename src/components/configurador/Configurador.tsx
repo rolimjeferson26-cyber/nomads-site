@@ -3,7 +3,7 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type PointerEvent } from "react";
 import type { Estampa } from "@/config/estampas";
 import { ESTILOS } from "@/config/estilos";
 import { CORES, DIMENSOES, PECAS, TAMANHOS, type Dimensao, type Peca, type TabelaPrecos } from "@/config/precos";
@@ -26,13 +26,25 @@ type Props = {
   inicial: { estampaId?: string; peca?: Peca };
 };
 
+let webglEmCache: boolean | null = null;
 function temWebGL(): boolean {
-  try {
-    const c = document.createElement("canvas");
-    return Boolean(c.getContext("webgl2") ?? c.getContext("webgl"));
-  } catch {
-    return false;
+  if (webglEmCache === null) {
+    try {
+      const c = document.createElement("canvas");
+      webglEmCache = Boolean(c.getContext("webgl2") ?? c.getContext("webgl"));
+    } catch {
+      webglEmCache = false;
+    }
   }
+  return webglEmCache;
+}
+
+const semSubscricao = () => () => {};
+const MQ_MOVEL = "(max-width: 1023px)";
+function subscreverMovel(f: () => void) {
+  const mq = window.matchMedia(MQ_MOVEL);
+  mq.addEventListener("change", f);
+  return () => mq.removeEventListener("change", f);
 }
 
 type Voo = { chave: number; url: string; de: DOMRect; para: DOMRect };
@@ -51,8 +63,10 @@ export function Configurador({ estampas, tabela, inicial }: Props) {
   const [dimensao, setDimensao] = useState<Dimensao>("25x25");
   const [peito, setPeito] = useState(false);
   const [quantidade, setQuantidade] = useState(1);
-  const [modo, setModo] = useState<"a-verificar" | "3d" | "2d">("a-verificar");
-  const [mobile, setMobile] = useState(false);
+  const webgl = useSyncExternalStore(semSubscricao, temWebGL, () => null);
+  const modo = webgl === null ? "a-verificar" : webgl ? "3d" : "2d";
+  const mobile = useSyncExternalStore(subscreverMovel, () => window.matchMedia(MQ_MOVEL).matches, () => false);
+  const contadorVoo = useRef(0);
   const [adicionado, setAdicionado] = useState(0);
   const [voo, setVoo] = useState<Voo | null>(null);
   const palco = useRef<HTMLDivElement>(null);
@@ -60,27 +74,16 @@ export function Configurador({ estampas, tabela, inicial }: Props) {
   const arrasto = useRef<{ x: number; ultimo: number } | null>(null);
 
   // O filtro acompanha o seletor de estilo do site.
-  const estiloAnterior = useRef(estilo.id);
-  useEffect(() => {
-    if (estiloAnterior.current !== estilo.id) {
-      estiloAnterior.current = estilo.id;
-      setFiltro(estilo.id);
-    }
-  }, [estilo.id]);
+  const [estiloAnterior, setEstiloAnterior] = useState(estilo.id);
+  if (estiloAnterior !== estilo.id) {
+    setEstiloAnterior(estilo.id);
+    setFiltro(estilo.id);
+  }
 
-  useEffect(() => {
-    setModo(temWebGL() ? "3d" : "2d");
-    const mq = window.matchMedia("(max-width: 1023px)");
-    const atualizar = () => setMobile(mq.matches);
-    atualizar();
-    mq.addEventListener("change", atualizar);
-    return () => mq.removeEventListener("change", atualizar);
-  }, []);
-
-  // Tamanho válido para a peça escolhida
-  useEffect(() => {
-    if (!(TAMANHOS[peca] as readonly string[]).includes(tamanho)) setTamanho("M");
-  }, [peca, tamanho]);
+  function escolherPeca(p: Peca) {
+    setPeca(p);
+    if (!(TAMANHOS[p] as readonly string[]).includes(tamanho)) setTamanho("M");
+  }
 
   // Roda a peça para o lado onde vai a estampa (pelo caminho mais curto).
   useEffect(() => {
@@ -120,10 +123,12 @@ export function Configurador({ estampas, tabela, inicial }: Props) {
     setEstampaId(e.id);
     const alvo = palco.current?.getBoundingClientRect();
     if (alvo && !reduzir) {
-      setVoo({ chave: Date.now(), url: e.imagemUrl, de: botao.getBoundingClientRect(), para: alvo });
+      contadorVoo.current += 1;
+      setVoo({ chave: contadorVoo.current, url: e.imagemUrl, de: botao.getBoundingClientRect(), para: alvo });
     }
   }
 
+  const contadorAdicionado = useRef(0);
   function adicionar() {
     if (!estampa || preco.tipo !== "preco") return;
     carrinho.adicionar({
@@ -135,7 +140,8 @@ export function Configurador({ estampas, tabela, inicial }: Props) {
       costas: pos.costas,
       quantidade,
     });
-    setAdicionado(Date.now());
+    contadorAdicionado.current += 1;
+    setAdicionado(contadorAdicionado.current);
   }
 
   // Arrastar para rodar (rato e toque). Na vertical deixa a página fazer scroll.
@@ -277,7 +283,7 @@ export function Configurador({ estampas, tabela, inicial }: Props) {
           <legend className="mb-2 font-semibold">Peça</legend>
           <div className="grid grid-cols-2 gap-2">
             {(Object.keys(PECAS) as Peca[]).map((p) => (
-              <button key={p} type="button" aria-pressed={peca === p} onClick={() => setPeca(p)} className="opcao font-semibold">
+              <button key={p} type="button" aria-pressed={peca === p} onClick={() => escolherPeca(p)} className="opcao font-semibold">
                 {PECAS[p]}
               </button>
             ))}

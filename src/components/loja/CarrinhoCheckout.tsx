@@ -71,7 +71,7 @@ export function CarrinhoCheckout({ estampas, tabelaPrecos, tabelaPortes, emailIn
     const cp = normalizarCodigoPostal(form.codigoPostal);
     iniciar(async () => {
       const r = await iniciarPagamento({
-        itens: linhas.map(({ id: _id, ...i }) => i),
+        itens: linhas.map((l) => ({ estampaId: l.estampaId, peca: l.peca, cor: l.cor, tamanho: l.tamanho, frente: l.frente, costas: l.costas, quantidade: l.quantidade })),
         email: form.email,
         nome: form.nome,
         telefone: form.telefone,
