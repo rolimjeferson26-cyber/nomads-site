@@ -43,9 +43,8 @@ export function Cabecalho() {
       className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${solido || aberto ? "bg-asfalto/90 backdrop-blur-md" : "bg-transparent"}`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 md:h-20 md:px-8">
-        <Link href="/" className="flex items-center gap-2" aria-label="NOMAD'S, página inicial">
-          <img src="/img/logo-emblema.webp" alt="" width={36} height={38} className="h-9 w-auto" />
-          <span className="titulo text-2xl tracking-wide">Nomad&apos;s</span>
+        <Link href="/" className="flex items-center gap-2" aria-label="Página inicial">
+          <img src="/img/logo-texto.webp" alt="NOMAD'S" width={1200} height={330} className="h-9 w-auto md:h-11" />
         </Link>
 
         <nav aria-label="Principal" className="ml-6 hidden flex-1 items-center gap-1 lg:flex">

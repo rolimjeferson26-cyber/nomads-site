@@ -35,7 +35,7 @@ export function Rodape() {
     <footer className="relative mt-24 border-t border-white/10 bg-asfalto-2 pb-28 pt-16">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 md:grid-cols-[1.4fr_repeat(3,1fr)] md:px-8">
         <div>
-          <img src="/img/logo-texto.webp" alt="NOMAD'S" width={1200} height={330} loading="lazy" className="h-14 w-auto" />
+          <img src="/img/logo-emblema.webp" alt="Emblema NOMAD'S" width={703} height={735} loading="lazy" className="h-32 w-auto" />
           <p className="mt-4 max-w-xs text-estrada">
             Estamparia DTF na {SITE.localidade}. Desde uma peça, entrega em até {SITE.prazoEntregaDias} dias.
           </p>

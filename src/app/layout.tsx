@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   title: { default: "NOMAD'S | Estamparia DTF em Murtosa, Aveiro", template: "%s | NOMAD'S" },
   description:
     "T-shirts e sweaters estampadas em DTF, desde uma peça. Configurador 3D, loja por estilos e orçamentos para empresas, festas e formaturas. Murtosa, Aveiro.",
-  icons: { icon: "/img/logo-emblema.webp" },
   openGraph: {
     type: "website",
     locale: "pt_PT",
