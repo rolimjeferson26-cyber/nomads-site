@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Hero } from "@/components/home/Hero";
 import { BlocoOrcamentos, ComoFunciona, Destaques, Estilos, FaixaMovimento, Trabalhos } from "@/components/home/Seccoes";
 import { Revelar } from "@/components/Revelar";
 import { obterEstampas } from "@/lib/dados";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function Inicio() {
   const estampas = await obterEstampas();

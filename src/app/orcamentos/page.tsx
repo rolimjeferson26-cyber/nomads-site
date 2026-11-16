@@ -3,6 +3,7 @@ import { Assistente } from "@/components/orcamentos/Assistente";
 import { obterTabelaPrecos } from "@/lib/dados";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/orcamentos" },
   title: "Orçamentos",
   description: "Pré-orçamento na hora para t-shirts e sweaters estampadas: empresas, festas, formaturas, equipas e associações.",
 };

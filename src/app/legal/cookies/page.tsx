@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { PaginaLegal } from "@/components/PaginaLegal";
 import { COOKIE_ESTILO } from "@/config/estilos";
 
-export const metadata: Metadata = { title: "Política de Cookies" };
+export const metadata: Metadata = {
+  alternates: { canonical: "/legal/cookies" }, title: "Política de Cookies" };
 
 export default function Cookies() {
   return (

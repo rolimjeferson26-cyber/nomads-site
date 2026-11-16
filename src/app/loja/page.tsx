@@ -6,6 +6,7 @@ import { SITE } from "@/config/site";
 import { obterEstampas, obterTabelaPrecos } from "@/lib/dados";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/loja" },
   title: "Loja",
   description: "T-shirts e sweaters com estampas Aventura, Anime, Jogos e Racing. Estampagem DTF desde uma peça.",
 };

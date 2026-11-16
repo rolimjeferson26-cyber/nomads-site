@@ -4,6 +4,7 @@ import { PECAS, type Peca } from "@/config/precos";
 import { obterEstampas, obterTabelaPrecos } from "@/lib/dados";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/configurador" },
   title: "Configurador 3D",
   description: "Escolhe a estampa, a peça, a cor e o tamanho, e vê a tua t-shirt ou sweater em 3D com o preço ao vivo.",
 };

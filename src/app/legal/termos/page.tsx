@@ -3,7 +3,8 @@ import Link from "next/link";
 import { PaginaLegal } from "@/components/PaginaLegal";
 import { SITE } from "@/config/site";
 
-export const metadata: Metadata = { title: "Termos e Condições" };
+export const metadata: Metadata = {
+  alternates: { canonical: "/legal/termos" }, title: "Termos e Condições" };
 
 export default function Termos() {
   return (

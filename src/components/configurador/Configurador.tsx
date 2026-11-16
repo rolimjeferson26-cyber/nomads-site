@@ -14,11 +14,20 @@ import { areasDoPosicionamento, posicionamento, type Face } from "@/lib/silhueta
 import { linkWhatsApp } from "@/lib/whatsapp";
 import { AvisoGrupo } from "../AvisoGrupo";
 import { useEstilo } from "../EstiloProvider";
-import { IconeRodar, IconeWhatsApp } from "../Icones";
+import { IconeBussola, IconeRodar, IconeWhatsApp } from "../Icones";
 import { MockupPlano } from "../MockupPlano";
 import type { EstadoRotacao } from "./Cena3D";
 
-const Cena3D = dynamic(() => import("./Cena3D"), { ssr: false });
+const Cena3D = dynamic(() => import("./Cena3D"), {
+  ssr: false,
+  loading: () => (
+    <div className="grid h-full place-items-center text-estrada" role="status">
+      <span className="flex flex-col items-center gap-3">
+        <IconeBussola className="size-12 animate-spin text-destaque [animation-duration:2.5s]" />A preparar a peça em 3D…
+      </span>
+    </div>
+  ),
+});
 
 type Props = {
   estampas: Estampa[];

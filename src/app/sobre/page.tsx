@@ -5,6 +5,7 @@ import { Revelar } from "@/components/Revelar";
 import { SITE } from "@/config/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/sobre" },
   title: "Sobre",
   description: "A NOMAD'S é uma estamparia DTF na Murtosa, Aveiro. Marca própria e peças personalizadas desde uma unidade.",
 };

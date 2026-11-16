@@ -6,7 +6,8 @@ import { SITE } from "@/config/site";
 import { linkWhatsApp } from "@/lib/whatsapp";
 import { enviarContacto } from "./acoes";
 
-export const metadata: Metadata = { title: "Contactos", description: `Fala com a NOMAD'S: WhatsApp ${SITE.telefoneVisivel}, email e oficina na Murtosa.` };
+export const metadata: Metadata = {
+  alternates: { canonical: "/contactos" }, title: "Contactos", description: `Fala com a NOMAD'S: WhatsApp ${SITE.telefoneVisivel}, email e oficina na Murtosa.` };
 
 export default function Contactos() {
   return (
