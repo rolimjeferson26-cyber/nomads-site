@@ -104,3 +104,36 @@ on conflict do nothing;
 ## Correção em telemóvel
 
 A 390 e 360 px o botão do WhatsApp tapava “Racing”. Em ecrãs pequenos o WhatsApp sobe para cima da barra de estilos e a barra usa a largura toda; o cartão de preço do configurador deixa de ficar colado ao fundo em telemóvel e o rodapé reserva espaço para os dois. Verificado com emulação de dispositivo (390 e 360 px) em Início, Loja e Configurador, local e em produção: as 4 opções ficam dentro do ecrã, clicáveis, sem sobreposição e sem scroll horizontal.
+
+## Fecho dos pendentes (16/11, 22:10)
+
+**Contas por código** (os templates da Ria enviam código; confirmado no painel, sem alterações)
+- Registo → passo “Escreve o código que enviámos para o teu email” (`/confirmar`), com reenviar e limite de tentativas; `verifyOtp` no servidor inicia sessão e segue para `/conta`.
+- Entrar com conta por confirmar leva ao mesmo passo. Recuperação por código em `/recuperar` → `/recuperar/codigo`. `/auth/callback` mantém-se para links.
+- Textos de “link de confirmação” substituídos. A mensagem de palavra-passe fraca explica a política do login partilhado.
+- Testado em produção com `rolimjeferson.26+nomadsteste@gmail.com`: registo → entrada com conta por confirmar (vai para o código) → código errado recusado → código certo (sessão em `/conta`) → sair/entrar → recuperação por código (a palavra-passe antiga deixa de funcionar, a nova entra). Conta de teste apagada no fim.
+- Nota: os códigos chegam como “Ria Digital” (agenda@riadigital.pt) e mencionam a Ria Agenda/Ria Auto; o site avisa disso.
+
+**Pagamentos**
+- Cada sessão de Checkout leva `statement_descriptor_suffix: "NOMADS"` (só se aplica a cartões).
+- Sem chaves: o carrinho mostra “Pagamentos online em ativação” e o link para encomendar pelo WhatsApp com o pedido preenchido (verificado no domínio). Com as chaves, o fluxo completo está no README (“Encomenda de teste”).
+
+**Domínio**
+- Zona **Active** desde 21:19 UTC; o DS antigo saiu do registo `.store` e o domínio resolve sem erro de DNSSEC.
+- `NEXT_PUBLIC_SITE_URL=https://nomadstextil.store`, rota *custom domain* ligada, site publicado.
+- Verificado: `https://nomadstextil.store` 200 com certificado válido; `http://` → 301 para HTTPS; `www` → 301 para a raiz (mantém caminho e query); HSTS, CSP com nonce, X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy e COOP presentes; canonical, Open Graph, sitemap e robots com o domínio.
+- O workers.dev continua a responder (testes).
+
+**Como confirmas a tua conta (rolimjeferson.26@gmail.com)**
+1. Abre https://nomadstextil.store/entrar e entra com o teu email e palavra-passe.
+2. Vais parar a “Confirma a conta”. Carrega em **Reenviar código** (o código antigo das 21:18 já expirou; duram 15 minutos).
+3. Abre o email “Confirme o seu email · Ria Digital” e escreve o código de 6 dígitos. Ficas com sessão iniciada; como já estás em `nomads.admins`, o menu da conta mostra “Admin”.
+Se não te lembrares da palavra-passe: “Esqueci a palavra-passe” → código → nova palavra-passe (isso também confirma o email).
+
+**Continua à espera do Juninho**
+- `npx wrangler secret put SUPABASE_SECRET_KEY` (sem ela: orçamentos e encomendas não gravam, sem uploads, rate limiting só em memória).
+- `npx wrangler secret put STRIPE_SECRET_KEY` e `STRIPE_WEBHOOK_SECRET` (modo de teste, conta Ninho Casa).
+- Stripe: passar o endpoint do webhook de teste para **https://nomadstextil.store/api/stripe/webhook** (ou criar um segundo endpoint para o domínio, com os mesmos 4 eventos) e pôr o signing secret correspondente em `STRIPE_WEBHOOK_SECRET`.
+- Resend (`RESEND_API_KEY`, `OWNER_EMAIL`, `EMAIL_FROM`) para os emails ao dono.
+- Confirmar a tua conta (acima).
+- Os “A CONFIRMAR” da lista acima (NIF, morada, nome legal, email, horário, RAL, IVA, entrega na zona, cores em stock, revisão jurídica).

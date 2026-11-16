@@ -2,8 +2,8 @@
 
 Loja, configurador 3D e orçamentos da NOMAD'S (estamparia DTF, Murtosa, Aveiro).
 
-- **Testes:** https://nomads-site.rolimjeferson-26.workers.dev
-- **Domínio final (ainda não ligado):** https://nomadstextil.store
+- **Site:** https://nomadstextil.store (o `www` redireciona para a raiz)
+- **Testes:** https://nomads-site.rolimjeferson-26.workers.dev (mesmo Worker, continua ligado)
 - O site antigo (HTML estático) continua na branch `main` / GitHub Pages até a v2 ir para o ar.
 
 ## Stack
@@ -83,10 +83,10 @@ pagamentos e área de cliente mostram uma mensagem e o WhatsApp.
 3. **Resend**: verificar o domínio `nomadstextil.store` e criar a chave.
 4. `npm run deploy`.
 
-## Passar para o domínio nomadstextil.store
+## Domínio nomadstextil.store (feito a 16/11/2026)
 
-A zona já está na Cloudflare (plano Free) com HTTPS forçado e redirecionamento `www → raiz`.
-Falta, por esta ordem:
+Zona ativa na Cloudflare (Free), HTTPS forçado, `www → raiz` (301), Worker ligado por *custom domain*.
+Passos que foram seguidos (para referência):
 
 1. Na **Amen**, trocar os nameservers para `collins.ns.cloudflare.com` e `santino.ns.cloudflare.com` e esperar que a zona fique *Active*.
 2. Em `.env.production`: `NEXT_PUBLIC_SITE_URL=https://nomadstextil.store`.
@@ -96,6 +96,24 @@ Falta, por esta ordem:
 6. Stripe: endpoint do webhook para `https://nomadstextil.store/api/stripe/webhook` (novo signing secret → `wrangler secret put STRIPE_WEBHOOK_SECRET`).
 
 As URLs de sucesso/cancelamento do Stripe, o sitemap, o canonical e o Open Graph derivam todos de `NEXT_PUBLIC_SITE_URL`.
+
+## Contas (login partilhado com a Ria Digital)
+
+Os emails de conta saem dos templates da Ria e trazem um **código**, não um link:
+- Registo → `/confirmar` (código + reenviar). Quem entra com conta por confirmar também vai para lá.
+- Esqueci a palavra-passe → `/recuperar` → `/recuperar/codigo` (código + nova palavra-passe).
+- `/auth/callback` continua a aceitar links (fluxo PKCE), caso os templates passem a enviar links.
+- A política de palavras-passe é a do Auth partilhado (maiúsculas, minúsculas, números e símbolos).
+- O email pendente fica num cookie httpOnly de 1 hora; tentativas de código limitadas (6 por 15 min por IP + email).
+
+## Encomenda de teste (Stripe, modo de teste)
+
+1. `npx wrangler secret put STRIPE_SECRET_KEY` (sk_test da conta Ninho Casa), `STRIPE_WEBHOOK_SECRET` e `SUPABASE_SECRET_KEY`.
+2. Abrir o site, escolher uma estampa no configurador (t-shirt, frente 25x25) e “Adicionar ao carrinho”.
+3. No carrinho: CTT com código postal (ex. 3870-100) ou Levantamento; nome, email, aceitar os Termos; “Pagar com segurança”.
+4. Na página da Stripe: cartão `4242 4242 4242 4242`, data futura, CVC qualquer, código postal qualquer.
+5. Volta a `/encomenda/sucesso`. Em segundos o webhook marca a encomenda como **Paga** (Admin › Encomendas) e chega o email ao dono (se o Resend estiver configurado).
+6. Na Stripe (modo de teste) › Pagamentos aparece o pagamento com o descritivo terminado em **NOMADS**.
 
 ## Segurança
 

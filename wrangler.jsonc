@@ -15,8 +15,8 @@
     }
   ],
   "workers_dev": true,
-  // DOMÍNIO FINAL: descomentar SÓ quando a v2 estiver pronta (ver README, "Passar para o domínio").
-  // "routes": [{ "pattern": "nomadstextil.store", "custom_domain": true }],
+  // Domínio final (ativo desde 16/11/2026). O workers.dev continua ligado para testes.
+  "routes": [{ "pattern": "nomadstextil.store", "custom_domain": true }],
   "observability": { "enabled": true }
   // Segredos (NUNCA aqui): npx wrangler secret put NOME
   // SUPABASE_SECRET_KEY, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET,
