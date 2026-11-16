@@ -1,5 +1,6 @@
 // Esquemas de validação (zod). Tudo o que chega do browser passa por aqui no servidor.
 import { z } from "zod";
+import { normalizarCodigoPostal } from "@/lib/envio/codigo-postal";
 import { CORES, DIMENSOES, PECAS, QUANTIDADE_MAXIMA_LOJA, TAMANHOS, TECIDOS } from "@/config/precos";
 
 const chaves = <T extends object>(o: T) => Object.keys(o) as [Extract<keyof T, string>, ...Extract<keyof T, string>[]];
@@ -167,4 +168,15 @@ export async function validarImagem(
 
 export function primeiroErro(e: z.ZodError): string {
   return e.issues[0]?.message ?? "Dados inválidos.";
+}
+
+export function normalizarParaMorada(fd: FormData) {
+  const cp = String(fd.get("codigoPostal") ?? "");
+  return {
+    nome: fd.get("nome"),
+    morada: fd.get("morada"),
+    codigoPostal: normalizarCodigoPostal(cp) ?? cp,
+    localidade: fd.get("localidade"),
+    telefone: fd.get("telefone") ?? "",
+  };
 }
