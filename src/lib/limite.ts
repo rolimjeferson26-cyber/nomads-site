@@ -8,6 +8,8 @@ export const LIMITES = {
   login: { max: 8, janela: 15 * 60 },
   registo: { max: 5, janela: 60 * 60 },
   recuperar: { max: 3, janela: 60 * 60 },
+  codigo: { max: 6, janela: 15 * 60 }, // tentativas de código (por IP + email)
+  reenviar: { max: 3, janela: 60 * 60 },
   orcamento: { max: 5, janela: 60 * 60 },
   contacto: { max: 5, janela: 60 * 60 },
   checkout: { max: 15, janela: 60 * 60 },
