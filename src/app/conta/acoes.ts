@@ -24,7 +24,9 @@ export async function guardarDados(_: EstadoForm, fd: FormData): Promise<EstadoF
   if (!v.success) return { erro: primeiroErro(v.error) };
   try {
     const { u, supabase } = await sessao();
-    const { error } = await supabase.from("perfis").update({ nome: v.data.nome, telefone: v.data.telefone || null }).eq("id", u.id);
+    const { error } = await supabase
+      .from("perfis")
+      .upsert({ id: u.id, nome: v.data.nome, telefone: v.data.telefone || null }, { onConflict: "id" });
     if (error) return { erro: "Não foi possível guardar." };
   } catch (e) {
     return { erro: (e as Error).message };

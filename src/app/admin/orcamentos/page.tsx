@@ -2,6 +2,7 @@ import { DIMENSOES, PECAS, TECIDOS, type Dimensao } from "@/config/precos";
 import { exigirAdmin } from "@/lib/auth";
 import { ESTADOS_ORCAMENTO, dataCurta } from "@/lib/estados";
 import { formatarEuros } from "@/lib/precos";
+import { BUCKET_ARTES } from "@/lib/supabase/config";
 import { supabaseServidor } from "@/lib/supabase/server";
 import { mudarEstadoOrcamento } from "../acoes";
 
@@ -14,7 +15,7 @@ export default async function AdminOrcamentos() {
   const links = new Map<string, string>();
   const caminhos = lista.map((o) => o.arte_path).filter(Boolean) as string[];
   if (caminhos.length) {
-    const { data: urls } = await s.storage.from("artes").createSignedUrls(caminhos, 3600);
+    const { data: urls } = await s.storage.from(BUCKET_ARTES).createSignedUrls(caminhos, 3600);
     urls?.forEach((u) => u.path && u.signedUrl && links.set(u.path, u.signedUrl));
   }
   const dim = (d: string | null) => (d ? DIMENSOES[d as Dimensao]?.nome ?? d : "—");

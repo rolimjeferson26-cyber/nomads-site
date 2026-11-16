@@ -364,7 +364,7 @@ export function Configurador({ estampas, tabela, inicial }: Props) {
           </div>
         </fieldset>
 
-        <div className="cartao sticky bottom-20 z-10 grid gap-3 p-5 lg:static">
+        <div className="cartao grid gap-3 p-5">
           <div className="flex items-end justify-between gap-4" aria-live="polite">
             <div>
               <p className="text-sm text-estrada">{preco.tipo === "preco" ? preco.descricao : "Preço"}</p>

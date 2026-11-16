@@ -1,5 +1,5 @@
 -- Estampas de exemplo (as imagens estão em /public/estampas do site).
-insert into public.estampas (id, nome, estilo, imagem_url, proporcao, ordem) values
+insert into nomads.estampas (id, nome, estilo, imagem_url, proporcao, ordem) values
   ('bussola', 'Bússola', 'aventura', '/estampas/bussola.svg', 1, 1),
   ('montanha', 'Vai e Volta', 'aventura', '/estampas/montanha.svg', 1, 2),
   ('estrada', 'Estrada Sem Fim', 'aventura', '/estampas/estrada.svg', 0.7143, 3),
@@ -14,5 +14,5 @@ insert into public.estampas (id, nome, estilo, imagem_url, proporcao, ordem) val
   ('curva-apex', 'Apex 26', 'racing', '/estampas/curva-apex.svg', 0.7143, 12)
 on conflict (id) do nothing;
 
--- Depois de criares a tua conta no site, torna-te admin (troca o email):
--- insert into public.admins (user_id) select id from auth.users where email = 'O_TEU_EMAIL';
+-- Tornar-se admin (depois de entrar no site com a conta):
+-- insert into nomads.admins (user_id) select id from auth.users where email = 'O_TEU_EMAIL';

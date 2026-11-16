@@ -11,7 +11,7 @@ export function SeletorEstilo() {
     <div
       role="radiogroup"
       aria-label="Estilo do site"
-      className="fixed bottom-4 left-1/2 z-50 flex max-w-[calc(100vw-6.5rem)] -translate-x-1/2 gap-1 overflow-x-auto rounded-full border border-white/10 bg-asfalto/85 p-1 shadow-2xl backdrop-blur-md sm:bottom-6 md:left-6 md:translate-x-0"
+      className="fixed bottom-3 left-1/2 z-50 flex max-w-[calc(100vw-1rem)] -translate-x-1/2 gap-0.5 overflow-x-auto rounded-full border border-white/10 bg-asfalto/85 p-1 shadow-2xl backdrop-blur-md md:bottom-6 md:left-6 md:max-w-none md:translate-x-0 md:gap-1"
     >
       {ESTILOS.map((e) => {
         const ativo = e.id === estilo.id;
@@ -22,7 +22,7 @@ export function SeletorEstilo() {
             role="radio"
             aria-checked={ativo}
             onClick={() => mudarEstilo(e.id)}
-            className="relative min-h-10 shrink-0 rounded-full px-3 text-sm font-semibold transition-colors sm:px-4"
+            className="relative min-h-10 shrink-0 rounded-full px-[clamp(0.6rem,3vw,1rem)] text-sm font-semibold transition-colors"
             style={{ color: ativo ? "#14110e" : undefined }}
           >
             {ativo && (

@@ -2,14 +2,15 @@ import "server-only";
 import { redirect } from "next/navigation";
 import { supabaseServidor } from "@/lib/supabase/server";
 
-export type Utilizador = { id: string; email: string };
+export type Utilizador = { id: string; email: string; nome: string };
 
 export async function utilizadorAtual(): Promise<Utilizador | null> {
   const supabase = await supabaseServidor();
   if (!supabase) return null;
   const { data } = await supabase.auth.getUser();
   if (!data.user) return null;
-  return { id: data.user.id, email: data.user.email ?? "" };
+  const nome = data.user.user_metadata?.nome;
+  return { id: data.user.id, email: data.user.email ?? "", nome: typeof nome === "string" ? nome : "" };
 }
 
 export async function exigirUtilizador(destino = "/conta"): Promise<Utilizador> {

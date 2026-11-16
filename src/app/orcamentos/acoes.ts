@@ -6,6 +6,7 @@ import { obterTabelaPrecos } from "@/lib/dados";
 import { escaparHtml, notificarDono, tabelaHtml } from "@/lib/email";
 import { MENSAGEM_LIMITE, verificarLimite } from "@/lib/limite";
 import { formatarEuros, precoLinha } from "@/lib/precos";
+import { BUCKET_ARTES } from "@/lib/supabase/config";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { TIPOS_IMAGEM, esquemaOrcamento, primeiroErro, validarImagem } from "@/lib/validacao";
 
@@ -51,12 +52,12 @@ export async function enviarOrcamento(fd: FormData): Promise<ResultadoOrcamento>
     let artePath: string | null = null;
     if (arte?.ok) {
       artePath = `orcamentos/${crypto.randomUUID()}.${TIPOS_IMAGEM[arte.tipo]}`;
-      const { error } = await admin.storage.from("artes").upload(artePath, arte.bytes, { contentType: arte.tipo, upsert: false });
+      const { error } = await admin.storage.from(BUCKET_ARTES).upload(artePath, arte.bytes, { contentType: arte.tipo, upsert: false });
       if (error) {
         console.error("orçamento: upload falhou", error.message);
         return { ok: false, erro: "Não foi possível guardar a imagem. Tenta outra vez ou envia-a pelo WhatsApp." };
       }
-      const { data } = await admin.storage.from("artes").createSignedUrl(artePath, 60 * 60 * 24 * 7);
+      const { data } = await admin.storage.from(BUCKET_ARTES).createSignedUrl(artePath, 60 * 60 * 24 * 7);
       linkArte = data?.signedUrl ?? null;
     }
     const utilizador = await utilizadorAtual();

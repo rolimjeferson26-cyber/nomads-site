@@ -17,6 +17,7 @@ export async function proxy(request: NextRequest) {
   const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (url && key) {
     const supabase = createServerClient(url, key, {
+      db: { schema: "nomads" },
       cookies: {
         getAll: () => request.cookies.getAll(),
         setAll: (lista, headers) => {

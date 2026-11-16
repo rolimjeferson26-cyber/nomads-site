@@ -18,7 +18,7 @@ export default async function Dados() {
       <div className="cartao p-6">
         <Formulario acao={guardarDados} botao="Guardar">
           <p className="text-sm text-estrada">Email: {u.email}</p>
-          <Campo rotulo="Nome" name="nome" defaultValue={perfil?.nome ?? ""} autoComplete="name" required maxLength={120} />
+          <Campo rotulo="Nome" name="nome" defaultValue={perfil?.nome ?? u.nome} autoComplete="name" required maxLength={120} />
           <Campo rotulo="Telemóvel" name="telefone" type="tel" defaultValue={perfil?.telefone ?? ""} autoComplete="tel" maxLength={30} />
         </Formulario>
       </div>

@@ -6,6 +6,7 @@ import type { EstadoForm } from "@/components/Formulario";
 import { ESTILOS } from "@/config/estilos";
 import { exigirAdmin } from "@/lib/auth";
 import { ESTADOS_ENCOMENDA, ESTADOS_ORCAMENTO } from "@/lib/estados";
+import { BUCKET_ESTAMPAS } from "@/lib/supabase/config";
 import { supabaseServidor } from "@/lib/supabase/server";
 import { TIPOS_IMAGEM, esquemaTabelaPortes, esquemaTabelaPrecos, primeiroErro, validarImagem } from "@/lib/validacao";
 
@@ -86,9 +87,9 @@ export async function novaEstampa(_: EstadoForm, fd: FormData): Promise<EstadoFo
   const s = await cliente();
   const id = `${slug(v.data.nome) || "estampa"}-${crypto.randomUUID().slice(0, 6)}`;
   const caminho = `${id}.${TIPOS_IMAGEM[img.tipo]}`;
-  const { error: errUp } = await s.storage.from("estampas").upload(caminho, img.bytes, { contentType: img.tipo });
+  const { error: errUp } = await s.storage.from(BUCKET_ESTAMPAS).upload(caminho, img.bytes, { contentType: img.tipo });
   if (errUp) return { erro: `Upload falhou: ${errUp.message}` };
-  const { data: pub } = s.storage.from("estampas").getPublicUrl(caminho);
+  const { data: pub } = s.storage.from(BUCKET_ESTAMPAS).getPublicUrl(caminho);
   const { count } = await s.from("estampas").select("id", { count: "exact", head: true });
   const { error } = await s.from("estampas").insert({
     id,
