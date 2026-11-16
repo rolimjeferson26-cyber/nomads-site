@@ -10,8 +10,9 @@ export const metadata: Metadata = { title: "As minhas encomendas", robots: { ind
 
 const ORDEM: EstadoEncomenda[] = ["paga", "em_producao", "enviada", "entregue"];
 
-export default async function Encomendas() {
+export default async function Encomendas({ searchParams }: PageProps<"/conta">) {
   await exigirUtilizador();
+  const sp = await searchParams;
   const supabase = await supabaseServidor();
   const { data } = (await supabase
     ?.from("encomendas")
@@ -22,6 +23,9 @@ export default async function Encomendas() {
 
   return (
     <section>
+      {sp["palavra-passe"] === "alterada" && (
+        <p role="status" className="mb-6 rounded-xl bg-ok/15 p-3 text-sm text-ok">Palavra-passe alterada. Já tens sessão iniciada.</p>
+      )}
       <h1 className="titulo text-5xl">Encomendas</h1>
       {encomendas.length === 0 ? (
         <p className="mt-6 text-estrada">

@@ -82,7 +82,11 @@ export async function iniciarPagamento(dados: unknown): Promise<ResultadoPagamen
       customer_email: c.email,
       client_reference_id: encomenda.id,
       metadata: { encomenda_id: encomenda.id },
-      payment_intent_data: { metadata: { encomenda_id: encomenda.id } },
+      payment_intent_data: {
+        metadata: { encomenda_id: encomenda.id },
+        // A conta Stripe é partilhada (Ninho Casa): o cliente vê "NOMADS" no extrato do cartão.
+        statement_descriptor_suffix: "NOMADS",
+      },
       line_items: [
         ...itens.map((i) => ({
           quantity: i.quantidade,

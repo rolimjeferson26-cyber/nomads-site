@@ -13,7 +13,7 @@ export default function Registar() {
         <Formulario acao={registar} botao="Criar conta">
           <Campo rotulo="Nome" name="nome" autoComplete="name" required maxLength={120} />
           <Campo rotulo="Email" name="email" type="email" autoComplete="email" required maxLength={200} />
-          <Campo rotulo="Palavra-passe (mín. 10 caracteres)" name="password" type="password" autoComplete="new-password" required minLength={10} maxLength={128} />
+          <Campo rotulo="Palavra-passe (mín. 10, com maiúsculas, minúsculas, números e símbolos)" name="password" type="password" autoComplete="new-password" required minLength={10} maxLength={128} />
           <label className="flex items-start gap-3 text-sm">
             <input type="checkbox" name="termos" value="sim" required className="mt-0.5 size-5 accent-[var(--destaque)]" />
             <span>

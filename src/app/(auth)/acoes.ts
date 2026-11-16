@@ -30,6 +30,18 @@ async function guardarEmailPendente(nome: string, email: string) {
   });
 }
 
+// A política de palavras-passe é a do login partilhado (ria-apps): explica o que falta.
+function mensagemPalavraPasseFraca(erro: unknown): string {
+  const razoes = (erro as { reasons?: string[] }).reasons ?? [];
+  const partes: string[] = [];
+  if (razoes.includes("length")) partes.push("é demasiado curta");
+  if (razoes.includes("characters")) partes.push("tem de ter minúsculas, maiúsculas, números e símbolos");
+  if (razoes.includes("pwned")) partes.push("apareceu numa fuga de dados conhecida");
+  return partes.length
+    ? `Palavra-passe fraca: ${partes.join("; ")}.`
+    : "Palavra-passe fraca: usa minúsculas, maiúsculas, números e símbolos.";
+}
+
 // Só aceita caminhos internos (evita redirecionamentos abertos).
 function destinoSeguro(v: FormDataEntryValue | null): string {
   const s = typeof v === "string" ? v : "";
@@ -75,7 +87,7 @@ export async function registar(_: EstadoForm, fd: FormData): Promise<EstadoForm>
   });
   if (error) {
     console.error("registo:", error.code, error.message);
-    if (error.code === "weak_password") return { erro: "Palavra-passe demasiado fraca. Escolhe outra." };
+    if (error.code === "weak_password") return { erro: mensagemPalavraPasseFraca(error) };
     if (error.code === "over_email_send_rate_limit") return { erro: MENSAGEM_LIMITE };
   }
   // Mesmo passo em todos os casos, para não revelar que emails já têm conta.
@@ -142,6 +154,7 @@ export async function redefinirComCodigo(_: EstadoForm, fd: FormData): Promise<E
   if (error) return { erro: "Código errado ou expirado. Confirma o código ou pede um novo." };
   const { error: erroSenha } = await supabase.auth.updateUser({ password: v.data.password });
   if (erroSenha) {
+    if (erroSenha.code === "weak_password") return { erro: mensagemPalavraPasseFraca(erroSenha) };
     if (erroSenha.code === "same_password") return { erro: "Escolhe uma palavra-passe diferente da anterior." };
     return { erro: "O código foi aceite mas não foi possível mudar a palavra-passe. Tenta outra vez." };
   }
