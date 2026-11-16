@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 400 400">
+<g fill="#F5F5F5" stroke="#111" stroke-width="3"><path d="M150 150C110 130 60 130 10 150c40 6 70 14 90 30-30-6-60-2-84 10 34 0 64 8 86 22-24-2-46 4-62 14 40-4 80 4 110 18Z"/><path d="M250 150c40-20 90-20 140 0-40 6-70 14-90 30 30-6 60-2 84 10-34 0-64 8-86 22 24-2 46 4 62 14-40-4-80 4-110 18Z"/></g>
+<path d="M186 205 172 330h56l-14-125Z" fill="#C9C9C9" stroke="#111" stroke-width="6"/>
+<rect x="150" y="70" width="100" height="110" rx="10" fill="#FF3B2F" stroke="#111" stroke-width="6"/><g stroke="#111" stroke-width="6"><path d="M150 96h100M150 114h100"/></g>
+<circle cx="200" cy="198" r="20" fill="#111"/><circle cx="200" cy="330" r="34" fill="#C9C9C9" stroke="#111" stroke-width="6"/><circle cx="200" cy="330" r="12" fill="#111"/>
+<text x="200" y="160" font-family="Impact,Arial Black,sans-serif" font-size="32" fill="#111" text-anchor="middle">V8</text>
+</svg>

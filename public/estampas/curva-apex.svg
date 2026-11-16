@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1120" viewBox="0 0 400 560">
+<g fill="none"><path d="M90 470V200c0-70 50-120 120-120s110 40 110 100-40 80-90 80-70 40-70 90 30 80 90 80" stroke="#F5F5F5" stroke-width="34" stroke-linecap="round"/>
+<path d="M90 470V200c0-70 50-120 120-120s110 40 110 100-40 80-90 80-70 40-70 90 30 80 90 80" stroke="#FF3B2F" stroke-width="34" stroke-dasharray="16 16"/>
+<path d="M90 470V200c0-70 50-120 120-120s110 40 110 100-40 80-90 80-70 40-70 90 30 80 90 80" stroke="#222" stroke-width="20"/></g>
+<circle cx="230" cy="260" r="12" fill="#FF3B2F" stroke="#F5F5F5" stroke-width="4"/>
+<text x="200" y="545" font-family="Impact,Arial Black,sans-serif" font-size="64" font-style="italic" fill="#FF3B2F" stroke="#111" stroke-width="2" text-anchor="middle" letter-spacing="4">APEX</text>
+<text x="335" y="470" font-family="Impact,Arial Black,sans-serif" font-size="90" font-style="italic" fill="#F5F5F5" stroke="#111" stroke-width="3" text-anchor="middle">26</text>
+</svg>

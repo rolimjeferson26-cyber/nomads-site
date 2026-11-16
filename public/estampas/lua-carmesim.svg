@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1120" viewBox="0 0 400 560">
+<circle cx="200" cy="230" r="150" fill="#FF4F8B"/><circle cx="200" cy="230" r="164" fill="none" stroke="#7FE7FF" stroke-width="4" stroke-dasharray="1 12" stroke-linecap="round"/>
+<g stroke="#1B1030" stroke-width="6" stroke-linecap="round"><path d="M40 160h90M20 200h120M50 240h70M260 180h120M280 220h100M300 260h70"/></g>
+<path d="M110 340c30-60 60-80 90-180 30 100 60 120 90 180Z" fill="#1B1030"/><path d="M200 160 220 220h-40Z" fill="#7FE7FF"/>
+<text x="200" y="470" font-family="Hiragino Kaku Gothic Pro,Yu Gothic,Noto Sans JP,sans-serif" font-weight="900" font-size="86" fill="#EDE3CF" stroke="#1B1030" stroke-width="3" text-anchor="middle" letter-spacing="10">ノマド</text>
+<text x="200" y="525" font-family="Arial,sans-serif" font-weight="700" font-size="22" fill="#FF4F8B" text-anchor="middle" letter-spacing="10">NOMAD · 26</text>
+</svg>

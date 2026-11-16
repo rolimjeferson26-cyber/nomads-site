@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 400 400">
+<defs><clipPath id="c"><circle cx="200" cy="200" r="168"/></clipPath><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E07A1F"/><stop offset="1" stop-color="#F2B01E"/></linearGradient></defs>
+<g clip-path="url(#c)"><rect width="400" height="400" fill="url(#g)"/><circle cx="200" cy="215" r="62" fill="#FFE7A8"/>
+<path d="M0 300 90 170 140 230 210 120 300 250 340 200 400 270V400H0Z" fill="#3B2A1E"/><path d="M210 120 236 158 222 152 210 170 196 150 186 156Z" fill="#EDE3CF"/>
+<path d="M0 330 70 270 150 320 240 250 320 310 400 280V400H0Z" fill="#16130F"/>
+<path d="M200 400 214 330 206 330 186 400Z" fill="#E07A1F" opacity=".7"/></g>
+<circle cx="200" cy="200" r="168" fill="none" stroke="#EDE3CF" stroke-width="8"/>
+<path id="arco" d="M60 230a140 140 0 0 0 280 0" fill="none"/>
+<text font-family="Impact,Arial Black,sans-serif" font-size="26" letter-spacing="6" fill="#EDE3CF"><textPath href="#arco" startOffset="50%" text-anchor="middle">VAI · VOLTA · VAI</textPath></text>
+</svg>

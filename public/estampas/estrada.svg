@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1120" viewBox="0 0 400 560">
+<rect x="20" y="20" width="360" height="520" rx="24" fill="#16130F" stroke="#E07A1F" stroke-width="8"/>
+<circle cx="200" cy="200" r="70" fill="#F2B01E"/><g fill="#16130F"><rect x="20" y="182" width="360" height="6"/><rect x="20" y="198" width="360" height="5"/><rect x="20" y="212" width="360" height="4"/></g>
+<path d="M20 270 120 220 190 256 260 210 380 270V536H20Z" fill="#3B2A1E"/>
+<path d="M196 256h8l150 280H46Z" fill="#2A2420"/><path d="M200 262 203 290h-6ZM200 310l6 50h-12ZM200 384l10 70h-20ZM200 476l14 60h-28Z" fill="#F2B01E"/>
+<text x="200" y="98" font-family="Impact,Arial Black,sans-serif" font-size="62" fill="#EDE3CF" text-anchor="middle" letter-spacing="2">SEM FIM</text>
+<text x="200" y="132" font-family="Arial,sans-serif" font-size="18" fill="#E07A1F" text-anchor="middle" letter-spacing="8">KM 0 · NOMAD&apos;S</text>
+</svg>

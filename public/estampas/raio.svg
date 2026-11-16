@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 400 400">
+<defs><pattern id="p" width="14" height="14" patternUnits="userSpaceOnUse"><circle cx="7" cy="7" r="3.2" fill="#7FE7FF"/></pattern></defs>
+<path d="M200 10 232 120 340 60 280 168 390 200 280 232 340 340 232 280 200 390 168 280 60 340 120 232 10 200 120 168 60 60 168 120Z" fill="#FF4F8B" stroke="#1B1030" stroke-width="6" stroke-linejoin="round"/>
+<circle cx="200" cy="200" r="110" fill="#1B1030"/><circle cx="200" cy="200" r="110" fill="url(#p)"/><circle cx="200" cy="200" r="110" fill="none" stroke="#1B1030" stroke-width="6"/>
+<path d="M222 70 150 214h50l-24 116 84-160h-54Z" fill="#EDE3CF" stroke="#1B1030" stroke-width="8" stroke-linejoin="round"/>
+</svg>
