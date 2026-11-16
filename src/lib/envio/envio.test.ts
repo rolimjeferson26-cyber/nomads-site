@@ -96,3 +96,27 @@ describe("CTT Expresso", () => {
     expect((await cotarEnvio(TABELA_PORTES, "ctt_expresso", { codigoPostal: "4000-001", pecas: camisolas(1) })).ok).toBe(false);
   });
 });
+
+describe("tabela oficial (CTT Expresso Em 2 Dias, balcão)", () => {
+  const cp = { continente: "3870-100", madeira: "9000-100", acores: "9500-100" };
+  const preco = async (codigo: string, pecas: { peca: "tshirt" | "sweater"; quantidade: number }[]) => {
+    const r = await cotarEnvio(TABELA_PORTES, "ctt", { codigoPostal: codigo, pecas });
+    return r.ok ? r.cotacao.precoCents : null;
+  };
+  it("pesos: t-shirt 200 g, sweater 500 g, embalagem 100 g", () => {
+    expect(pesoTotalGramas(TABELA_PORTES, { codigoPostal: null, pecas: [{ peca: "tshirt", quantidade: 2 }, { peca: "sweater", quantidade: 1 }] })).toBe(1000);
+  });
+  it("continente: 9,35 € / 14,05 € / 18,81 €", async () => {
+    expect(await preco(cp.continente, camisolas(9))).toBe(935); // 1,9 kg
+    expect(await preco(cp.continente, camisolas(10))).toBe(1405); // 2,1 kg
+    expect(await preco(cp.continente, camisolas(49))).toBe(1881); // 9,9 kg
+  });
+  it("ilhas: 18,19 € / 26,06 € / 45,61 €", async () => {
+    expect(await preco(cp.madeira, camisolas(1))).toBe(1819);
+    expect(await preco(cp.acores, [{ peca: "sweater", quantidade: 8 }])).toBe(2606); // 4,1 kg
+    expect(await preco(cp.acores, [{ peca: "sweater", quantidade: 19 }])).toBe(4561); // 9,6 kg
+  });
+  it("acima de 10 kg: a combinar", async () => {
+    expect(await preco(cp.continente, camisolas(50))).toBeNull(); // 10,1 kg
+  });
+});

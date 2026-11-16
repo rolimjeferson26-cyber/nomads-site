@@ -12,6 +12,7 @@ import { carrinho } from "@/lib/carrinho";
 import { formatarEuros, precoUnitario } from "@/lib/precos";
 import { areasDoPosicionamento, posicionamento, type Face } from "@/lib/silhueta";
 import { linkWhatsApp } from "@/lib/whatsapp";
+import { AvisoGrupo } from "../AvisoGrupo";
 import { useEstilo } from "../EstiloProvider";
 import { IconeRodar, IconeWhatsApp } from "../Icones";
 import { MockupPlano } from "../MockupPlano";
@@ -369,6 +370,7 @@ export function Configurador({ estampas, tabela, inicial }: Props) {
             )}
           </div>
           <p className="text-xs text-estrada">Preço final, isento de IVA. Entrega em até {SITE.prazoEntregaDias} dias.</p>
+          <AvisoGrupo quantidade={quantidade} pedido={descricao} />
 
           {preco.tipo === "preco" ? (
             <button type="button" className="botao w-full" onClick={adicionar} disabled={!estampa}>

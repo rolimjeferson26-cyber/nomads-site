@@ -9,8 +9,8 @@ export const SITE = {
   localidade: "Murtosa, região de Aveiro",
   email: "geral@nomads.pt", // A CONFIRMAR
   // Número de WhatsApp com indicativo, só números (veio do site atual)
-  whatsapp: "351915907886", // A CONFIRMAR
-  telefoneVisivel: "+351 915 907 886", // A CONFIRMAR
+  whatsapp: "351915907886",
+  telefoneVisivel: "915 907 886",
   instagram: "https://www.instagram.com/nomad.textil/",
   facebook: "https://www.facebook.com/share/18MqGuUEzL/",
   prazoEntregaDias: 10,
@@ -23,6 +23,10 @@ export const SITE = {
   },
 } as const;
 
+// O domínio do site vive SÓ nesta variável de ambiente (hoje um endereço workers.dev).
 export function siteUrl(): string {
   return (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 }
+
+// A partir daqui mostramos o convite para rever valores no WhatsApp.
+export const LIMITE_GRUPO = 10;

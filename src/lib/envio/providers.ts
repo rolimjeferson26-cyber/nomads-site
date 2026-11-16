@@ -11,10 +11,10 @@ function semPecas(pedido: PedidoEnvio): boolean {
   return pedido.pecas.length === 0 || pedido.pecas.some((p) => !Number.isInteger(p.quantidade) || p.quantidade < 1);
 }
 
-// Tabela CTT por escalão de peso e zona (não há API pública dos CTT).
+// Tabela CTT por escalão de peso e zona (não há API pública dos CTT; preço de balcão).
 export class TabelaCTT implements ProviderEnvio {
   readonly metodo = "ctt" as const;
-  readonly nome = "CTT (correio registado)";
+  readonly nome = "CTT Expresso Em 2 Dias";
   readonly ativo = true;
   constructor(private tabela: TabelaPortes) {}
 
@@ -29,7 +29,7 @@ export class TabelaCTT implements ProviderEnvio {
     const escaloes = [...this.tabela.ctt[zona]].sort((a, b) => a.ateGramas - b.ateGramas);
     const escalao = escaloes.find((e) => peso <= e.ateGramas);
     if (!escalao) {
-      return { ok: false, motivo: "Encomenda acima do peso da tabela: portes sob consulta." };
+      return { ok: false, motivo: "Acima de 10 kg: portes a combinar connosco pelo WhatsApp." };
     }
     return {
       ok: true,

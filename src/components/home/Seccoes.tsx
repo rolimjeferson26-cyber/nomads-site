@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import type { Estampa } from "@/config/estampas";
 import { ESTILOS } from "@/config/estilos";
-import { SITE } from "@/config/site";
+import { LIMITE_GRUPO, SITE } from "@/config/site";
+import { linkWhatsApp } from "@/lib/whatsapp";
 import { OCASIOES } from "@/lib/validacao";
 import { useEstilo } from "../EstiloProvider";
-import { IconeSeta } from "../Icones";
+import { IconeSeta, IconeWhatsApp } from "../Icones";
 import { MockupPlano } from "../MockupPlano";
 import { Revelar } from "../Revelar";
 
@@ -120,7 +121,18 @@ export function BlocoOrcamentos() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/orcamentos" className="botao text-lg">Fazer orçamento <IconeSeta className="size-5" /></Link>
+            <a
+              href={linkWhatsApp(`Olá NOMAD'S! Precisamos de mais de ${LIMITE_GRUPO} peças estampadas. Podemos falar sobre valores?`)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="botao text-lg !bg-[#25D366] !text-white"
+            >
+              <IconeWhatsApp className="size-5" /> WhatsApp
+            </a>
           </div>
+          <p className="mt-6 inline-block -rotate-1 rounded-xl bg-asfalto px-5 py-3 text-lg font-semibold text-marfim">
+            Mais de {LIMITE_GRUPO} peças? Fala connosco no WhatsApp e revemos os valores.
+          </p>
         </Revelar>
         <Revelar atraso={0.15}>
           <ul className="flex flex-wrap gap-2">

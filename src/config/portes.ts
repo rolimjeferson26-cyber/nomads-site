@@ -1,4 +1,4 @@
-// Portes de envio. Todos os valores em cêntimos e gramas. A CONFIRMAR com o balcão CTT.
+// Portes de envio. Todos os valores em cêntimos e gramas.
 // O Admin pode alterar estes valores; a versão editada fica na base de dados.
 
 import type { Peca } from "./precos";
@@ -21,34 +21,31 @@ export type TabelaPortes = {
   entregaLocal: { precoCents: number; prefixosCodigoPostal: string[]; descricao: string };
 };
 
+// Base: CTT Expresso "Em 2 Dias", preço de balcão com IVA incluído (sem contrato CTT).
+// Acima do último escalão (10 kg): portes a combinar pelo WhatsApp.
 export const TABELA_PORTES: TabelaPortes = {
-  pesoPorPecaGramas: { tshirt: 200, sweater: 550 }, // A CONFIRMAR
-  pesoEmbalagemGramas: 60, // A CONFIRMAR
+  pesoPorPecaGramas: { tshirt: 200, sweater: 500 },
+  pesoEmbalagemGramas: 100,
   ctt: {
-    // A CONFIRMAR: valores de referência, rever com a tabela CTT em vigor
     continente: [
-      { ateGramas: 500, precoCents: 450 },
-      { ateGramas: 1000, precoCents: 550 },
-      { ateGramas: 2000, precoCents: 650 },
-      { ateGramas: 5000, precoCents: 900 },
-      { ateGramas: 10000, precoCents: 1250 },
+      { ateGramas: 2000, precoCents: 935 },
+      { ateGramas: 5000, precoCents: 1405 },
+      { ateGramas: 10000, precoCents: 1881 },
     ],
     madeira: [
-      { ateGramas: 500, precoCents: 650 },
-      { ateGramas: 1000, precoCents: 850 },
-      { ateGramas: 2000, precoCents: 1100 },
-      { ateGramas: 5000, precoCents: 1600 },
+      { ateGramas: 2000, precoCents: 1819 },
+      { ateGramas: 5000, precoCents: 2606 },
+      { ateGramas: 10000, precoCents: 4561 },
     ],
     acores: [
-      { ateGramas: 500, precoCents: 650 },
-      { ateGramas: 1000, precoCents: 850 },
-      { ateGramas: 2000, precoCents: 1100 },
-      { ateGramas: 5000, precoCents: 1600 },
+      { ateGramas: 2000, precoCents: 1819 },
+      { ateGramas: 5000, precoCents: 2606 },
+      { ateGramas: 10000, precoCents: 4561 },
     ],
   },
-  levantamento: { precoCents: 0, local: "Oficina NOMAD'S, Murtosa" }, // A CONFIRMAR: morada
+  levantamento: { precoCents: 0, local: "Oficina NOMAD'S, Murtosa" },
   entregaLocal: {
-    precoCents: 300, // A CONFIRMAR
+    precoCents: 300, // A CONFIRMAR (não indicado no complemento)
     // Primeiros 4 dígitos do código postal abrangidos. A CONFIRMAR
     prefixosCodigoPostal: ["3870", "3860", "3880"],
     descricao: "Murtosa, Estarreja e Ovar",
