@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
+/* Fontes locais (licença OFL em /public/fonts): sem pedidos a terceiros */
+@font-face { font-family: "Big Shoulders Display"; font-weight: 700; font-display: swap; src: url("/fonts/big-shoulders-display-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Big Shoulders Display"; font-weight: 900; font-display: swap; src: url("/fonts/big-shoulders-display-latin-900-normal.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 400; font-display: swap; src: url("/fonts/archivo-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 500; font-display: swap; src: url("/fonts/archivo-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Archivo"; font-weight: 600; font-display: swap; src: url("/fonts/archivo-latin-600-normal.woff2") format("woff2"); }
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --destaque e --destaque-2 vêm do estilo ativo (config/estilos.ts) */
+  --destaque: #e07a1f;
+  --destaque-2: #f2b01e;
+}
+
+@theme {
+  --color-asfalto: #14110e;
+  --color-asfalto-2: #1e1914;
+  --color-asfalto-3: #2a231c;
+  --color-marfim: #ede3cf;
+  --color-estrada: #9a9083;
+  --color-erro: #ff6b5b;
+  --color-ok: #6fd08c;
+  --font-titulo: "Big Shoulders Display", Impact, "Arial Narrow", sans-serif;
+  --font-texto: "Archivo", system-ui, sans-serif;
+  --ease-estrada: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-destaque: var(--destaque);
+  --color-destaque-2: var(--destaque-2);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-padding-top: 88px;
+  transition: --destaque 0.6s;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-asfalto);
+  color: var(--color-marfim);
+  font-family: var(--font-texto);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--destaque);
+  color: var(--color-asfalto);
+}
+
+:focus-visible {
+  outline: 3px solid var(--destaque-2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@layer components {
+  .titulo {
+    font-family: var(--font-titulo);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+  }
+  .kicker {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--destaque);
+  }
+  .botao {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1.5rem;
+    border-radius: 999px;
+    background: var(--destaque);
+    color: var(--color-asfalto);
+    font-weight: 600;
+    transition: transform 0.2s var(--ease-estrada), background-color 0.3s, box-shadow 0.3s;
+  }
+  .botao:hover {
+    background: var(--destaque-2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px var(--destaque);
+  }
+  .botao:active { transform: translateY(0) scale(0.98); }
+  .botao:disabled { opacity: 0.5; pointer-events: none; }
+  .botao-linha {
+    background: transparent;
+    color: var(--color-marfim);
+    box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--color-marfim) 70%, transparent);
+  }
+  .botao-linha:hover { background: var(--color-marfim); color: var(--color-asfalto); }
+  .campo {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.9rem;
+    border-radius: 12px;
+    background: var(--color-asfalto-2);
+    border: 1px solid var(--color-asfalto-3);
+    color: var(--color-marfim);
+  }
+  .campo:focus { border-color: var(--destaque); outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--destaque) 30%, transparent); }
+  .rotulo { display: grid; gap: 0.4rem; font-size: 0.9rem; font-weight: 500; }
+  .cartao { background: var(--color-asfalto-2); border: 1px solid var(--color-asfalto-3); border-radius: 20px; }
+  .opcao {
+    border: 1px solid var(--color-asfalto-3);
+    border-radius: 12px;
+    padding: 0.6rem 0.9rem;
+    min-height: 44px;
+    background: var(--color-asfalto-2);
+    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+  }
+  .opcao:hover { border-color: color-mix(in oklab, var(--destaque) 60%, transparent); }
+  .opcao[aria-pressed="true"], .opcao[aria-checked="true"], .opcao:has(input:checked) {
+    border-color: var(--destaque);
+    background: color-mix(in oklab, var(--destaque) 16%, var(--color-asfalto-2));
+  }
+  .prosa h2 { font-family: var(--font-titulo); font-weight: 900; text-transform: uppercase; font-size: 1.8rem; margin: 2.2rem 0 0.6rem; }
+  .prosa h3 { font-weight: 600; font-size: 1.1rem; margin: 1.4rem 0 0.4rem; }
+  .prosa p, .prosa li { color: color-mix(in oklab, var(--color-marfim) 85%, transparent); line-height: 1.7; }
+  .prosa ul { list-style: disc; padding-left: 1.3rem; display: grid; gap: 0.3rem; }
+  .prosa a { color: var(--destaque); text-decoration: underline; text-underline-offset: 3px; }
+}
+
+/* ---------- Fundos animados por estilo ---------- */
+@keyframes deslizar-x { to { transform: translateX(-50%); } }
+@keyframes deslizar-diag { to { background-position: 400px 0; } }
+@keyframes pulsar { 50% { opacity: 0.35; } }
+@keyframes rodar { to { transform: rotate(360deg); } }
+@keyframes subir { to { background-position: 0 -320px; } }
+
+.fundo-topografia path { stroke: var(--destaque); stroke-opacity: 0.22; animation: pulsar 7s ease-in-out infinite; }
+.fundo-topografia g { transform-origin: 50% 50%; animation: rodar 240s linear infinite; }
+.fundo-velocidade {
+  background-image: repeating-linear-gradient(100deg, transparent 0 46px, color-mix(in oklab, var(--destaque) 26%, transparent) 46px 48px, transparent 48px 120px),
+    repeating-linear-gradient(100deg, transparent 0 80px, color-mix(in oklab, var(--destaque-2) 18%, transparent) 80px 81px, transparent 81px 170px);
+  background-size: 400px 100%;
+  animation: deslizar-diag 1.6s linear infinite;
+}
+.fundo-pixeis {
+  background-image: linear-gradient(color-mix(in oklab, var(--destaque) 16%, transparent) 2px, transparent 2px),
+    linear-gradient(90deg, color-mix(in oklab, var(--destaque) 16%, transparent) 2px, transparent 2px);
+  background-size: 32px 32px;
+  animation: subir 6s linear infinite;
+}
+.fundo-pista {
+  background-image: repeating-linear-gradient(-28deg, transparent 0 60px, color-mix(in oklab, var(--destaque) 22%, transparent) 60px 64px, transparent 64px 72px, color-mix(in oklab, var(--destaque-2) 12%, transparent) 72px 74px, transparent 74px 220px);
+  background-size: 400px 100%;
+  animation: deslizar-diag 1s linear infinite;
+}
+
+.faixa-movimento { animation: deslizar-x 28s linear infinite; }
+
+/* Respeitar quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
