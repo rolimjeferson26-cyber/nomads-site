@@ -2,17 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PaginaLegal } from "@/components/PaginaLegal";
 import { SITE } from "@/config/site";
+import { linkWhatsApp } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/legal/termos" }, title: "Termos e Condições" };
 
 export default function Termos() {
   return (
-    <PaginaLegal titulo="Termos e Condições" atualizado="16 de novembro de 2026">
+    <PaginaLegal titulo="Termos e Condições" atualizado="18 de novembro de 2026">
       <h2>1. Quem somos</h2>
       <p>
-        Este site é explorado por {SITE.nomeLegal}, NIF {SITE.nif}, com oficina em {SITE.morada} (“NOMAD&apos;S”). Contacto:{" "}
-        <a href={`mailto:${SITE.email}`}>{SITE.email}</a> · WhatsApp {SITE.telefoneVisivel}.
+        Este site é explorado por {SITE.nomeLegal}, {SITE.formaJuridica}, NIF {SITE.nif}, com oficina em {SITE.morada}
+        (“NOMAD&apos;S”). Contacto: WhatsApp{" "}
+        <a href={linkWhatsApp("Olá NOMAD'S!")} target="_blank" rel="noopener noreferrer">
+          {SITE.telefoneVisivel}
+        </a>
+        .
       </p>
       <h2>2. Produtos e personalização</h2>
       <p>
@@ -25,7 +30,7 @@ export default function Termos() {
       </p>
       <h2>3. Preços e pagamento</h2>
       <p>
-        Os preços apresentados são finais, em euros, isentos de IVA (regime de isenção aplicável). Os portes são indicados
+        Os preços apresentados são finais, em euros, isentos de IVA ao abrigo do artigo 53.º do CIVA. Os portes são indicados
         antes do pagamento e correspondem ao preço de balcão CTT com IVA incluído. Combinações marcadas “Sob consulta” são
         orçamentadas à parte.
       </p>
@@ -57,8 +62,8 @@ export default function Termos() {
       <h2>8. Reclamações e litígios</h2>
       <p>
         Podes reclamar no <a href={SITE.livroReclamacoes} target="_blank" rel="noopener noreferrer">Livro de Reclamações Eletrónico</a>.
-        Em caso de litígio de consumo, podes recorrer a uma entidade de resolução alternativa de litígios:{" "}
-        <a href={SITE.ral.url} target="_blank" rel="noopener noreferrer">{SITE.ral.nome}</a>. Mais informação em{" "}
+        Em caso de litígio de consumo, podes recorrer à entidade de resolução alternativa de litígios (Lei n.º 144/2015){" "}
+        {SITE.ral.nome} (<a href={SITE.ral.url} target="_blank" rel="noopener noreferrer">{SITE.ral.site}</a>). Mais informação em{" "}
         <a href="https://www.consumidor.gov.pt" target="_blank" rel="noopener noreferrer">consumidor.gov.pt</a>.
       </p>
       <h2>9. Lei aplicável</h2>

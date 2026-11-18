@@ -2,17 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PaginaLegal } from "@/components/PaginaLegal";
 import { SITE } from "@/config/site";
+import { linkWhatsApp } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/legal/privacidade" }, title: "Política de Privacidade" };
 
 export default function Privacidade() {
   return (
-    <PaginaLegal titulo="Política de Privacidade" atualizado="16 de novembro de 2026">
+    <PaginaLegal titulo="Política de Privacidade" atualizado="18 de novembro de 2026">
       <h2>Responsável pelo tratamento</h2>
       <p>
-        {SITE.nomeLegal}, NIF {SITE.nif}, {SITE.morada}. Para qualquer questão sobre os teus dados:{" "}
-        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        {SITE.nomeLegal} ({SITE.formaJuridica}), NIF {SITE.nif}, {SITE.morada}. Para qualquer questão sobre os teus
+        dados: WhatsApp{" "}
+        <a href={linkWhatsApp("Olá NOMAD'S! Tenho uma questão sobre os meus dados.")} target="_blank" rel="noopener noreferrer">
+          {SITE.telefoneVisivel}
+        </a>
+        .
       </p>
       <h2>Que dados tratamos e porquê</h2>
       <ul>
@@ -45,7 +50,11 @@ export default function Privacidade() {
       <h2>Os teus direitos</h2>
       <p>
         Tens direito de acesso, retificação, apagamento, limitação, portabilidade e oposição, e de retirar o consentimento.
-        Escreve para <a href={`mailto:${SITE.email}`}>{SITE.email}</a>. Podes também apresentar reclamação à Comissão Nacional
+        Fala connosco pelo WhatsApp{" "}
+        <a href={linkWhatsApp("Olá NOMAD'S! Quero exercer os meus direitos sobre os meus dados.")} target="_blank" rel="noopener noreferrer">
+          {SITE.telefoneVisivel}
+        </a>
+        . Podes também apresentar reclamação à Comissão Nacional
         de Proteção de Dados (<a href="https://www.cnpd.pt" target="_blank" rel="noopener noreferrer">cnpd.pt</a>).
       </p>
       <h2>Cookies</h2>

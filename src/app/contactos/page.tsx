@@ -7,7 +7,7 @@ import { linkWhatsApp } from "@/lib/whatsapp";
 import { enviarContacto } from "./acoes";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "/contactos" }, title: "Contactos", description: `Fala com a NOMAD'S: WhatsApp ${SITE.telefoneVisivel}, email e oficina na Murtosa.` };
+  alternates: { canonical: "/contactos" }, title: "Contactos", description: `Fala com a NOMAD'S: WhatsApp ${SITE.telefoneVisivel} e oficina na Murtosa.` };
 
 export default function Contactos() {
   return (
@@ -21,7 +21,6 @@ export default function Contactos() {
               <IconeWhatsApp className="size-5" /> WhatsApp {SITE.telefoneVisivel}
             </a>
           </li>
-          <li><span className="text-estrada">Email · </span><a href={`mailto:${SITE.email}`} className="underline">{SITE.email}</a></li>
           <li><span className="text-estrada">Oficina · </span>{SITE.morada}</li>
           <li><span className="text-estrada">Horário · </span>{SITE.horario}</li>
           <li className="flex gap-4 text-base">

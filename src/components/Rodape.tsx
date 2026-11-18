@@ -60,7 +60,7 @@ export function Rodape() {
       </div>
       <div className="mx-auto mt-12 flex max-w-7xl flex-col gap-4 px-4 text-sm text-estrada md:flex-row md:items-center md:justify-between md:px-8">
         <p>
-          &copy; {new Date().getFullYear()} {SITE.nomeLegal} · NIF {SITE.nif} · Preços finais, isentos de IVA.
+          &copy; {new Date().getFullYear()} {SITE.nomeLegal} · NIF {SITE.nif} · Preços finais, isentos de IVA (art. 53.º CIVA).
         </p>
         <a
           href={SITE.livroReclamacoes}

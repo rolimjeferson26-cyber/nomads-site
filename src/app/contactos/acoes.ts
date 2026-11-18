@@ -17,7 +17,7 @@ export async function enviarContacto(_: EstadoForm, fd: FormData): Promise<Estad
   if (!v.success) return { erro: primeiroErro(v.error) };
   if (!(await verificarLimite("contacto", v.data.email))) return { erro: MENSAGEM_LIMITE };
   if (!segredo("RESEND_API_KEY")) {
-    return { erro: "O formulário ainda não está ativo. Fala connosco pelo WhatsApp ou por email." };
+    return { erro: "O formulário ainda não está ativo. Fala connosco pelo WhatsApp." };
   }
   await notificarDono(
     `Mensagem do site: ${v.data.nome}`,

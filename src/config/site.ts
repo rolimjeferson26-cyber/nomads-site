@@ -1,13 +1,15 @@
 // Dados gerais da NOMAD'S.
-// Tudo o que está marcado "A CONFIRMAR" tem de ser revisto antes de publicar.
+// Tudo o que está marcado "A CONFIRMAR" tem de ser revisto (só nos comentários, nunca visível no site).
 
 export const SITE = {
   nome: "NOMAD'S",
-  nomeLegal: "NOMAD'S Têxtil", // A CONFIRMAR: nome da empresa/empresário em nome individual
-  nif: "000000000", // A CONFIRMAR
-  morada: "Murtosa, 3870 Aveiro", // A CONFIRMAR: morada completa da oficina
+  nomeLegal: "Jeferson Francisco Rolim Junior",
+  formaJuridica: "empresário em nome individual",
+  nif: "314604685",
+  regimeIva: "isento de IVA ao abrigo do artigo 53.º do CIVA",
+  morada: "Murtosa, Aveiro", // A CONFIRMAR: morada completa da oficina
   localidade: "Murtosa, região de Aveiro",
-  email: "geral@nomads.pt", // A CONFIRMAR
+  // Sem email público até haver um endereço confirmado: o contacto oficial é o WhatsApp.
   // Número de WhatsApp com indicativo, só números (veio do site atual)
   whatsapp: "351915907886",
   telefoneVisivel: "915 907 886",
@@ -16,10 +18,11 @@ export const SITE = {
   prazoEntregaDias: 10,
   horario: "Segunda a sexta, 9h às 19h. Sábado por marcação.", // A CONFIRMAR
   livroReclamacoes: "https://www.livroreclamacoes.pt/Inicio/",
-  // Entidade de resolução alternativa de litígios (Lei 144/2015)
+  // Entidade de resolução alternativa de litígios (Lei 144/2015, art. 18.º)
   ral: {
-    nome: "CNIACC – Centro Nacional de Informação e Arbitragem de Conflitos de Consumo", // A CONFIRMAR
+    nome: "CNIACC – Centro Nacional de Informação e Arbitragem de Conflitos de Consumo",
     url: "https://www.cniacc.pt",
+    site: "www.cniacc.pt",
   },
 } as const;
 
